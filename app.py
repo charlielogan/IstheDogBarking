@@ -1,9 +1,18 @@
+import streamlit as st
+import numpy as np
+import datetime
+import random
 
-from flask import Flask
-from flask_flatpages import FlatPages
-from flask_frozen import Freezer
+today = datetime.date.today()
+date_seed = int(str(today.month) + str(today.day) + str(today.year))
+random.seed(date_seed)
+bark_likelihood = random.random()
 
-app = Flask(__name__)
-app.config.from_pyfile('settings.py')
-pages = FlatPages(app)
-freezer = Freezer(app)
+is_bark = np.random.uniform(0, 1) < bark_likelihood
+
+if is_bark:
+    text = "The Dog is Currently Barking"
+else:
+    text = "The Dog is Not Currently Barking"
+
+st.text(text)
